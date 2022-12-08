@@ -11,8 +11,11 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 import { BsCartX } from "react-icons/bs";
+import ReactDOM from "react-dom";
+import Select from "react-select";
 import { trpc } from "../utils/trpc";
 import { useState } from "react";
 

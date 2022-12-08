@@ -44,6 +44,9 @@ const Settings: NextPageWithLayout = () => {
 
   const { mutateAsync } = trpc.user.create.useMutation();
 
+  const handleSubmit = () => {};
+
+
   return (
     <Flex
       pos="relative"
@@ -73,7 +76,7 @@ const Settings: NextPageWithLayout = () => {
             </AccordionButton>
           </h2>
           <AccordionPanel pb={4}>
-            <FormControl>
+            <Box as="form" onSubmit={handleSubmit(onSubmit)}>
               <HStack direction={"column"} spacing="5rem">
                 <Box display="flex" flexDirection={"column"}>
                   <FormLabel>Username</FormLabel>
@@ -235,7 +238,7 @@ const Settings: NextPageWithLayout = () => {
               <Button colorScheme="teal" variant="outline" mt={"2rem"}>
                 Register
               </Button>
-            </FormControl>
+            </Box>
           </AccordionPanel>
         </AccordionItem>
 
