@@ -1,3 +1,4 @@
+//https://youtu.be/VyNaze8uYzQ
 import {
   Accordion,
   AccordionButton,
@@ -44,8 +45,8 @@ const Settings: NextPageWithLayout = () => {
 
   const { mutateAsync } = trpc.user.create.useMutation();
 
-  const handleSubmit = () => {};
-
+  // const handleSubmit = () => {};
+  // const { register } = useForm();
 
   return (
     <Flex
@@ -95,6 +96,7 @@ const Settings: NextPageWithLayout = () => {
                       placeholder="Write one username"
                       w={"20rem"}
                       h={"2rem"}
+                      ref={register}
                     />
                   </InputGroup>
 
@@ -115,6 +117,7 @@ const Settings: NextPageWithLayout = () => {
                       placeholder="Enter one password"
                       w={"20rem"}
                       h={"2rem"}
+                      ref={register}
                     />
                     <InputRightElement width="4.5rem" right={"5rem"}>
                       <Button h="1.75rem" size="sm" onClick={handleClick}>
@@ -139,6 +142,7 @@ const Settings: NextPageWithLayout = () => {
                       placeholder="Phone number"
                       w={"20rem"}
                       h={"2rem"}
+                      ref={register}
                     />
                   </InputGroup>
                   <FormLabel>Nome / Razão Social</FormLabel>
@@ -157,6 +161,7 @@ const Settings: NextPageWithLayout = () => {
                       w={"30rem"}
                       placeholder="Write your name or Corporate Name"
                       h={"2rem"}
+                      ref={register}
                     />
                   </InputGroup>
                 </Box>
@@ -177,6 +182,7 @@ const Settings: NextPageWithLayout = () => {
                       w={"20rem"}
                       placeholder="Write your CPF or CNPJ"
                       h={"2rem"}
+                      ref={register}
                     />
                   </InputGroup>
                   <FormLabel>Email Address</FormLabel>
@@ -195,6 +201,7 @@ const Settings: NextPageWithLayout = () => {
                       w={"20rem"}
                       placeholder="Write your e-mail adress"
                       h={"2rem"}
+                      ref={register}
                     />
                   </InputGroup>
                   <FormLabel>Setor</FormLabel>
@@ -213,6 +220,7 @@ const Settings: NextPageWithLayout = () => {
                       w={"20rem"}
                       placeholder="Write your sector"
                       h={"2rem"}
+                      ref={register}
                     />
                   </InputGroup>
                   <FormLabel>Cargo</FormLabel>
@@ -231,6 +239,7 @@ const Settings: NextPageWithLayout = () => {
                       w={"20rem"}
                       placeholder="Write your position in the company"
                       h={"2rem"}
+                      ref={register}
                     />
                   </InputGroup>
                 </Box>
