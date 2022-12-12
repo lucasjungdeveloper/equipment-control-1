@@ -1,4 +1,5 @@
 //https://youtu.be/VyNaze8uYzQ
+//https://codevoweb.com/setup-trpc-api-server-client-with-nextjs-and-prisma/
 import {
   Accordion,
   AccordionButton,
@@ -25,28 +26,72 @@ import {
   MdWork,
 } from "react-icons/md";
 import type { ReactElement, SetStateAction } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
 import { BiRename } from "react-icons/bi";
 import { BsFileEarmarkPersonFill } from "react-icons/bs";
 import Layout from "../components/Layout";
 import type { NextPageWithLayout } from "../types/layout";
 import React from "react";
+import { UserSchema } from "../server/common/UserSchema";
 import { trpc } from "../utils/trpc";
 import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const Settings: NextPageWithLayout = () => {
   const [input, setInput] = useState("");
   const [show, setShow] = React.useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<typeof UserSchema>({
+    resolver: zodResolver(UserSchema),
+  });
   const handleClick = () => setShow(!show);
-
+  const { mutateAsync } = trpc.user.create.useMutation();
+  // const onSubmit: SubmitHandler<Profile> = (data) => console.log(data);
+  // Essa parada aqui não deu certo, deixei o obSubmit de baixo, mais comentei pra tentar fazer depois
   const handleInputChange = (e: {
     target: { value: SetStateAction<string> };
   }) => setInput(e.target.value);
 
-  const { mutateAsync } = trpc.user.create.useMutation();
+  const onSubmit = handleSubmit((data) => {
+    // alert(JSON.stringify(data));
+    mutateAsync({
+      username: "",
+      email: "",
+      nome: null,
+      cpf: null,
+      password: "",
+      telefone: "",
+      setor: null,
+      cargo: null,
+      profilePicture: "",
+      auth: null,
+      email_confirmed_at: null,
+      invited_at: null,
+      reauthenticated_at: null,
+      last_login_at: null,
+      reauthentication_sent_at: null,
+      reauthentication_token: null,
+      phone_change_at: null,
+      confirmation_token: null,
+      is_super_admin: false,
+    });
+  });
 
-  // const handleSubmit = () => {};
-  // const { register } = useForm();
+  // Type for test
+  // type Profile = {
+  //   username: string;
+  //   password: string;
+  //   telefone: string;
+  //   nome: string;
+  //   cpf: string;
+  //   email: string;
+  //   setor: string;
+  //   cargo: string;
+  // };
 
   return (
     <Flex
@@ -96,8 +141,12 @@ const Settings: NextPageWithLayout = () => {
                       placeholder="Write one username"
                       w={"20rem"}
                       h={"2rem"}
-                      ref={register}
+                      id="username"
+                      {...register("username")}
                     />
+                    {mutation.error && (
+                      <p>Something went wrong! {mutation.error.message}</p>
+                    )}
                   </InputGroup>
 
                   <FormLabel>Password</FormLabel>
@@ -117,8 +166,9 @@ const Settings: NextPageWithLayout = () => {
                       placeholder="Enter one password"
                       w={"20rem"}
                       h={"2rem"}
-                      ref={register}
+                      {...register("password")}
                     />
+                    {errors.password && <span>This field is required</span>}
                     <InputRightElement width="4.5rem" right={"5rem"}>
                       <Button h="1.75rem" size="sm" onClick={handleClick}>
                         {show ? "Hide" : "Show"}
@@ -142,8 +192,9 @@ const Settings: NextPageWithLayout = () => {
                       placeholder="Phone number"
                       w={"20rem"}
                       h={"2rem"}
-                      ref={register}
+                      {...register("telefone")}
                     />
+                    {errors.telefone && <span>This field is required</span>}
                   </InputGroup>
                   <FormLabel>Nome / Razão Social</FormLabel>
                   <InputGroup>
@@ -161,8 +212,9 @@ const Settings: NextPageWithLayout = () => {
                       w={"30rem"}
                       placeholder="Write your name or Corporate Name"
                       h={"2rem"}
-                      ref={register}
+                      {...register("nome")}
                     />
+                    {errors.nome && <span>This field is required</span>}
                   </InputGroup>
                 </Box>
                 <Box display="flex" flexDirection={"column"}>
@@ -182,8 +234,9 @@ const Settings: NextPageWithLayout = () => {
                       w={"20rem"}
                       placeholder="Write your CPF or CNPJ"
                       h={"2rem"}
-                      ref={register}
+                      {...register("cpf")}
                     />
+                    {errors.cpf && <span>This field is required</span>}
                   </InputGroup>
                   <FormLabel>Email Address</FormLabel>
                   <InputGroup>
@@ -201,8 +254,9 @@ const Settings: NextPageWithLayout = () => {
                       w={"20rem"}
                       placeholder="Write your e-mail adress"
                       h={"2rem"}
-                      ref={register}
+                      {...register("email")}
                     />
+                    {errors.email && <span>This field is required</span>}
                   </InputGroup>
                   <FormLabel>Setor</FormLabel>
                   <InputGroup>
@@ -220,8 +274,9 @@ const Settings: NextPageWithLayout = () => {
                       w={"20rem"}
                       placeholder="Write your sector"
                       h={"2rem"}
-                      ref={register}
+                      {...register("setor")}
                     />
+                    {errors.setor && <span>This field is required</span>}
                   </InputGroup>
                   <FormLabel>Cargo</FormLabel>
                   <InputGroup>
@@ -239,18 +294,23 @@ const Settings: NextPageWithLayout = () => {
                       w={"20rem"}
                       placeholder="Write your position in the company"
                       h={"2rem"}
-                      ref={register}
+                      {...register("cargo")}
                     />
+                    {errors.cargo && <span>This field is required</span>}
                   </InputGroup>
                 </Box>
               </HStack>
-              <Button colorScheme="teal" variant="outline" mt={"2rem"}>
+              <Button
+                colorScheme="teal"
+                variant="outline"
+                mt={"2rem"}
+                type="submit"
+              >
                 Register
               </Button>
             </Box>
           </AccordionPanel>
         </AccordionItem>
-
         <AccordionItem>
           <h2>
             <AccordionButton>
