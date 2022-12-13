@@ -1,5 +1,9 @@
+import connectDB from "../../../utils/prismaDB";
 import { router } from "../trpc";
 import { userRouter } from "./user";
+
+// Connect to Prisma
+connectDB();
 
 export const appRouter = router({
   user: userRouter,

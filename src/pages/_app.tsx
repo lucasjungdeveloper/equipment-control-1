@@ -1,6 +1,6 @@
 import "../styles/globals.css";
 
-import { AppPropsWithLayout } from "../types/layout";
+import type { AppPropsWithLayout } from "../types/layout";
 import { ChakraProvider } from "@chakra-ui/react";
 import { trpc } from "../utils/trpc";
 
