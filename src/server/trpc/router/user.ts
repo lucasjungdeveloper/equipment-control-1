@@ -1,22 +1,19 @@
 import { publicProcedure, router } from "../trpc";
 
-import { userSchema } from "../../common/userSchema";
+import { UserSchema } from "../../common/UserSchema";
 import { z } from "zod";
 
 export const userRouter = router({
   // create seria uma funcionalidade de criar os usuários
-  create: publicProcedure.input(userSchema).mutation(async ({ input, ctx }) => {
+  create: publicProcedure.input(UserSchema).mutation(async ({ input, ctx }) => {
     try {
-      await ctx.prisma.users.create({
+      const user = await ctx.prisma.users.create({
         data: input,
       });
+      return user;
     } catch (error) {
       console.log(error);
     }
-    // const user = await ctx.prisma.users.create({
-    //   data: input,
-    // });
-    // return user;
   }),
 
   // getSomeThings seria uma funcionalidade de listar resumidamente os usuários

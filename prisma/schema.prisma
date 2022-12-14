@@ -59,10 +59,10 @@ model users {
   telefone                 String
   nome                     String?   @db.VarChar
   cpf                      String?   @db.VarChar
-  email                    String    @unique
+  email                    String?   @unique
   setor                    String?   @db.VarChar
   cargo                    String?   @db.VarChar
-  profilePicture           String
+  profilePicture           String?
   create_at                DateTime? @default(now()) @db.Timestamptz(6)
   auth                     String?   @db.VarChar
   email_confirmed_at       DateTime? @db.Timestamptz()

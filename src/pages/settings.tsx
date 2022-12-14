@@ -32,9 +32,9 @@ import type { NextPageWithLayout } from "../types/layout";
 import React from "react";
 import type { ReactElement } from "react";
 import type { SubmitHandler } from "react-hook-form";
+import { UserSchema } from "../server/common/UserSchema";
 import { trpc } from "../utils/trpc";
 import { useForm } from "react-hook-form";
-import { userSchema } from "../server/common/userSchema";
 import type { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -45,20 +45,21 @@ const Settings: NextPageWithLayout = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<z.infer<typeof userSchema>>({
-    resolver: zodResolver(userSchema),
+  } = useForm<z.infer<typeof UserSchema>>({
+    resolver: zodResolver(UserSchema),
   });
   const handleClick = () => setShow(!show);
-  const { mutateAsync } = trpc.user.create.useMutation();
+  const { mutateAsync: createUser } = trpc.user.create.useMutation();
 
-  const submitUser: SubmitHandler<z.infer<typeof userSchema>> = async (
+  const submitUser: SubmitHandler<z.infer<typeof UserSchema>> = async (
     data
   ) => {
-    await mutateAsync(data);
-    console.log(mutateAsync(data));
-    alert(JSON.stringify(mutateAsync(data)));
+    const response = await createUser(data);
+    console.log(response);
     reset();
   };
+
+  console.log(errors);
 
   return (
     <Flex
