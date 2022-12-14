@@ -16,7 +16,7 @@ export const userRouter = router({
     }
   }),
 
-  // getSomeThings seria uma funcionalidade de listar resumidamente os usuários
+  //getSomeThings seria uma funcionalidade de listar resumidamente os usuários
   getSomeThings: publicProcedure.query(async ({ ctx }) => {
     try {
       return await ctx.prisma.users.findMany({

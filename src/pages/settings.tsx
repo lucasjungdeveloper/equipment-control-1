@@ -1,5 +1,7 @@
 //https://youtu.be/VyNaze8uYzQ
 //https://codevoweb.com/setup-trpc-api-server-client-with-nextjs-and-prisma/
+//https://nextjs.org/docs/api-reference/data-fetching/get-static-props
+//https://stackoverflow.com/questions/44342226/next-js-error-only-absolute-urls-are-supported
 import {
   Accordion,
   AccordionButton,
