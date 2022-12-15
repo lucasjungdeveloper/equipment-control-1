@@ -1,8 +1,6 @@
 import { z } from "zod";
-// username: z.string({
-//   description: "Apenas para lembrar que da para mexer com erro",
-// }),
-export const UserSchema = z.object({
+
+export const UserCreateSchema = z.object({
   username: z.string({
     invalid_type_error: "Apenas para lembrar que da para mexer com erro",
   }),

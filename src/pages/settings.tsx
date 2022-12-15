@@ -34,7 +34,7 @@ import type { NextPageWithLayout } from "../types/layout";
 import React from "react";
 import type { ReactElement } from "react";
 import type { SubmitHandler } from "react-hook-form";
-import { UserSchema } from "../server/common/UserSchema";
+import { UserCreateSchema } from "../server/common/UserSchema";
 import { trpc } from "../utils/trpc";
 import { useForm } from "react-hook-form";
 import type { z } from "zod";
@@ -47,18 +47,17 @@ const Settings: NextPageWithLayout = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<z.infer<typeof UserSchema>>({
-    resolver: zodResolver(UserSchema),
+  } = useForm<z.infer<typeof UserCreateSchema>>({
+    resolver: zodResolver(UserCreateSchema),
   });
   const handleClick = () => setShow(!show);
   const { mutateAsync: createUser } = trpc.user.create.useMutation();
 
-  const submitUser: SubmitHandler<z.infer<typeof UserSchema>> = async (
+  const submitUser: SubmitHandler<z.infer<typeof UserCreateSchema>> = async (
     data
   ) => {
     const response = await createUser(data);
-    console.log(response);
-    reset();
+    console.log("res", response);
   };
 
   console.log(errors);
